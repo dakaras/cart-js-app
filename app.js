@@ -45,12 +45,39 @@ class Products {
 
 //display products
 class UI {
+    displayProducts(products) {
+        let result = ''
+        products.forEach(product => {
+            result += `
+            <article class="product">
+          <div class="img-container">
+            <img
+              src=${product.image}
+              alt="product"
+              class="product-img"
+            />
+            <button class="bag-btn" data-id=${product.id}>
+              <i class="fas fa-shopping-cart"> add to bag</i>
+            </button>
+          </div>
+          <h3>${product.title}</h3>
+          <h4>${product.price}</h4>
+        </article>
+            `
+        })
+        productsDOM.innerHTML = result
+    }
 
+    getBagButtons() {
+        const buttons = [...document.querySelectorAll('.bag-btn')]
+    }
 }
 
 //local storage
 class Storage {
-
+    static saveProducts(products) {
+        localStorage.setItem('products', JSON.stringify(products))
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -58,5 +85,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const products = new Products()
 
     //get all products
-    products.getProducts().then(data => console.log(data))
+    products.getProducts().then(products => {
+        ui.displayProducts(products)
+        Storage.saveProducts(products)
+    }).then(() => {
+        ui.getBagButtons()
+    })
 })

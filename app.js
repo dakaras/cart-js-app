@@ -94,12 +94,22 @@ class UI {
                 //save cart to local storage
                 Storage.saveCart(cart)
                 //set cart values
-
+                this.setCartValues(cart)
                 //display cart item
 
                 //show cart
             })
         })
+    }
+    setCartValues(cart) {
+        let tempTotal = 0
+        let itemsTotal = 0
+        cart.map(item => {
+            tempTotal += item.price * item.amount
+            itemsTotal += item.amount
+        })
+        cartTotal.innerHTML = parseFloat(tempTotal.toFixed(2))
+        cartItems.innerHTML = item
     }
 }
 
@@ -111,6 +121,9 @@ class Storage {
     static getProduct(id) {
         let products = JSON.parse(localStorage.getItem('products'))
         return products.find(product => product.id === id)
+    }
+    static saveCart(cart) {
+        localStorage.setItem('cart', JSON.stringify(cart))
     }
 }
 

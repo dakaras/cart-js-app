@@ -2,7 +2,7 @@
 
 const cartBtn = document.querySelector('.cart-btn')
 const closeCartBtn = document.querySelector('.close-cart')
-const clearCart = document.querySelector('.clear-cart')
+const clearCartBtn = document.querySelector('.clear-cart')
 const cartDOM = document.querySelector('.cart')
 const cartOverlay = document.querySelector('.cart-overlay')
 const cartItems = document.querySelector('.cart-items')
@@ -150,14 +150,15 @@ class UI {
     }
     //clear cart button
     cartLogic() {
-        clearCart.addEventListener('click', () => {
-            this.clearCart
+        clearCartBtn.addEventListener('click', () => {
+            this.clearCart()
         })
     }
     //cart functionality 
     clearCart() {
         let cartItems = cart.map(item => item.id)
-        cartItems.forEach(id => this.removeItem(id))
+        console.log(cartItems);
+
     }
     removeItem(id) {
         cart = cart.filter(item => item.id !== id)

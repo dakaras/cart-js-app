@@ -13,7 +13,7 @@ const productsDOM = document.querySelector('.products-center')
 //cart 
 let cart = []
 //buttons 
-let buttomsDOM = []
+let buttonsDOM = []
 
 //getting products
 class Products {
@@ -72,7 +72,7 @@ class UI {
 
     getBagButtons() {
         const buttons = [...document.querySelectorAll('.bag-btn')]
-        buttomsDOM = buttons
+        buttonsDOM = buttons
         buttons.forEach(button => {
             let id = button.dataset.id
             let inCart = cart.find(item => item.id === id)
@@ -157,8 +157,13 @@ class UI {
     //cart functionality 
     clearCart() {
         let cartItems = cart.map(item => item.id)
-        console.log(cartItems);
+        cartItems.forEach(id => this.removeItem(id))
+        console.log(cartContent.children);
 
+        while (cartContent.children.length > 0) {
+            cartContent.removeChild(cartContent.children[0])
+        }
+        this.hideCart()
     }
     removeItem(id) {
         cart = cart.filter(item => item.id !== id)

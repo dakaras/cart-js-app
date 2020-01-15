@@ -59,7 +59,7 @@ class UI {
               class="product-img"
             />
             <button class="bag-btn" data-id=${product.id}>
-              <i class="fas fa-shopping-cart"> add to bag</i>
+              <i class="fas fa-shopping-cart"> add to cart</i>
             </button>
           </div>
           <h3>${product.title}</h3>
@@ -148,13 +148,25 @@ class UI {
         cartOverlay.classList.remove('transparentBcg')
         cartDOM.classList.remove('showCart')
     }
-    //clear cart button
     cartLogic() {
+        //clear cart button
         clearCartBtn.addEventListener('click', () => {
             this.clearCart()
         })
+        //cart functionality 
+        cartContent.addEventListener('click', event => {
+            if (event.target.classList.contains('remove-item')) {
+                let removeItem = event.target
+                let id = removeItem.dataset.id
+                cartContent.removeChild(removeItem.parentElement.parentElement)
+                this.removeItem(id)
+            } else if (event.target.classList.contains('fa-chevron-up')) {
+                let addAmount = event.target
+                let id = addAmount.dataset.id
+            }
+
+        })
     }
-    //cart functionality 
     clearCart() {
         let cartItems = cart.map(item => item.id)
         cartItems.forEach(id => this.removeItem(id))
@@ -171,7 +183,7 @@ class UI {
         Storage.saveCart(cart)
         let button = this.getSingleButton(id)
         button.disabled = false
-        button.innerHTML = `<i class.fas.fa-shopping-cart>add to cart</i>`
+        button.innerHTML = `<i class.fas.fa-shopping-cart></i>add to cart`
     }
     getSingleButton(id) {
         return buttonsDOM.find(button => button.dataset.id === id)
